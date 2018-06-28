@@ -15,16 +15,19 @@ namespace ASQueen
         public NQueen()
         {
             InitializeComponent();
-            pnlChess.Visible = false;
-            lblTime.Visible = false;
+            pnlChess.Visible = false; 
         }
 
         private void btnSolve_Click(object sender, EventArgs e)
         {
+            Solve(); 
+        }
+
+        private void Solve()
+        {
             try
             {
                 pnlChess.Visible = false;
-                lblTime.Visible = false;
                 pnlChess.Controls.Clear();
                 if (txtN.Text == "")
                 {
@@ -32,22 +35,20 @@ namespace ASQueen
                     return;
                 }
                 var numberOfQueens = int.Parse(txtN.Text);
-                if (numberOfQueens<4)
+                if (numberOfQueens < 4)
                 {
                     MessageBox.Show("Enter a number greater than or equals to 4");
                     return;
                 }
-                var board = new Board(numberOfQueens);
+                var board = new AStarBoard(numberOfQueens);
                 var stopWatch = new Stopwatch();
-                lblTime.Text = "";
+
                 stopWatch.Start();
                 var result = AStarSearch(board);
                 stopWatch.Stop();
-                lblTime.Text = $"{stopWatch.ElapsedMilliseconds} MilliSecond";
                 if (result != null)
                 {
                     pnlChess.Visible = true;
-                    lblTime.Visible = true;
                     result.ShowBoard(pnlChess);
                 }
                 else
@@ -59,11 +60,8 @@ namespace ASQueen
             {
                 MessageBox.Show("Error occured while trying to solve the NQueen Problem.");
             }
-
-
         }
-
-        Board AStarSearch(Board board)
+        AStarBoard AStarSearch(AStarBoard board)
         {
             if (board.IsGoal())
             {
@@ -101,6 +99,19 @@ namespace ASQueen
         private void NQueen_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void txtN_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (int) Keys.Enter)
+            {
+                Solve();
+            }
         }
     }
 }

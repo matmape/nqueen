@@ -4,13 +4,13 @@ using System.Windows.Forms;
 
 namespace ASQueen
 {
-    public class Board
+    public class AStarBoard
     {
         public int NumberOfQueens;
         private readonly int[] _board;
         private int _counter;
 
-        public Board(int numberOfQueens)
+        public AStarBoard(int numberOfQueens)
         {
             NumberOfQueens = numberOfQueens;
             _board = new int[NumberOfQueens];
@@ -81,7 +81,7 @@ namespace ASQueen
             }
             for (var i = 0; i < _counter; i++)
             {
-                chess[i, _board[i]].Load(Application.StartupPath + "\\queen.jpg");
+                chess[i, _board[i]].Load(Application.StartupPath + "\\queenCapture.png");
                 chess[i, _board[i]].SizeMode = PictureBoxSizeMode.StretchImage;
             }
         }
